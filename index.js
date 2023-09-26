@@ -4,7 +4,6 @@ const bodyParser = require("koa-bodyparser");
 const cors = require("@koa/cors");
 
 const logger = require("./utils/logger");
-
 //引入mock路由
 const mockList = require("./mock/index");
 
