@@ -4,7 +4,7 @@ function logger() {
     await next();
     const end = Date.now();
     const ms = end - start;
-    console.log(`${cxt.method} ${ctx.url} ${ctx.status} - ms:${ms}`);
+    console.log(`${ctx.method} ${ctx.url} ${ctx.status} - ms:${ms}`);
   };
 }
 
