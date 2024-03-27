@@ -2,6 +2,8 @@ const Koa = require("koa");
 const Router = require("koa-router");
 const bodyParser = require("koa-bodyparser");
 const cors = require("@koa/cors");
+const path = require('path');
+const fs = require('fs');
 
 const logger = require("./utils/logger");
 //引入mock路由
@@ -29,6 +31,24 @@ mockList.forEach((item) => {
   });
 });
 
+const newSend = require('koa-send');
+
+router.get('/api/pagFile', async (ctx) => {
+  const filePath = 'like.pag'; // 这里不需要 path.join，因为文件在当前目录
+  console.log(`Trying to send file from path: ${filePath}`);
+  // ctx.attachment(filePath); // 如果不需要浏览器直接下载文件，这行可以注释掉
+  await send(ctx, filePath); // 使用 koa-send 发送文件
+});
+
+// 尝试同步读取文件以确认其存在
+const filePath = path.join(__dirname, 'like.pag');
+try {
+  const data = fs.readFileSync(filePath);
+  console.log('File read successfully', data.length);
+} catch (error) {
+  console.error('Error reading file', error);
+}
+
 // 注册中间件
 app.use(cors());
 app.use(bodyParser());
@@ -36,7 +56,7 @@ app.use(bodyParser());
 // 注册自定义中间件
 app.use(logger());
 
-app.use(router.routes());
+app.use(router.routes()).use(router.allowedMethods());
 
 
 
@@ -69,6 +89,31 @@ app.use(router.routes());
 // });
 
 
+// // 托管静态资源
+// const koaStatic = require('koa-static');
+// // 加载pag图片地址
+// const staticPath = './data/pag';
+
+// app.use(koaStatic(
+//   path.join( __dirname,  staticPath)
+// ));
+
+const send = require('koa-send');
+
+router.get('/api/pagFile', async (ctx) => {
+  // 假设文件位于 data/pag/like.pag
+  const filePath = path.join(__dirname, 'data/pag/like.pag');
+  ctx.attachment(filePath);
+  await send(ctx, filePath);
+});
+
+router.get('/api/removeFromShelves', async (ctx) => {
+  ctx.throw(500, '服务器错误')
+  // 假设文件位于 data/pag/like.pag
+  // const filePath = path.join(__dirname, 'data/pag/like.pag');
+  // ctx.attachment(filePath);
+  // await send(ctx, filePath);
+});
 
 app.listen(8111, () => {
   console.log("vue_demo_koa 启动成功！");

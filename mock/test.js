@@ -9,7 +9,7 @@ module.exports = [
     response(ctx) {
       const { url, query = {} } = ctx;
       return {
-        errno: 0,
+        errno: 200,
         msg: "success",
         data: {
           list: options,
@@ -25,9 +25,37 @@ module.exports = [
     method: "get",
     response() {
       return {
-        errno: 0,
+        errno: 500,
         data: {
           msg: "test2请求成功！",
+        },
+        msg: "success",
+      };
+    },
+  },
+  // 返回错误
+  {
+    url: "/api/test3",
+    method: "get",
+    response() {
+      return {
+        errno: 500,
+        data: {
+          msg: "下架失败",
+        },
+        msg: "error",
+      };
+    },
+  },
+  // 测试用例4
+  {
+    url: "/api/test4",
+    method: "get",
+    response() {
+      return {
+        errno: 200,
+        data: {
+          msg: "上架成功",
         },
         msg: "success",
       };
