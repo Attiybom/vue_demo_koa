@@ -45,7 +45,7 @@ router.get("/api/pagFile", async (ctx) => {
 const filePath = path.join(__dirname, "like.pag");
 try {
   const data = fs.readFileSync(filePath);
-  console.log("File read successfully", data.length);
+  // console.log("File read successfully", data.length);
 } catch (error) {
   console.error("Error reading file", error);
 }
@@ -140,5 +140,5 @@ router.post("/api/uploadTest", (ctx) => {
 app.use(router.routes()).use(router.allowedMethods());
 
 app.listen(8111, () => {
-  console.log("vue_demo_koa 启动成功！");
+  console.log("8111 启动成功！");
 });
