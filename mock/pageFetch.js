@@ -20,7 +20,12 @@ module.exports = [
   {
     url: "/api/pageFetch",
     method: "get",
-    response() {
+    response(ctx) {
+      console.log('ctx', ctx)
+      console.log('ctx.query', ctx.query)
+
+      // console.log('ctx.req', ctx?.req)
+      // console.log('ctx.res', ctx?.res)
       return {
         errno: 0,
         data: {

@@ -83,21 +83,7 @@ app.use(
   })
 );
 
-router.post("/api/uploadImgs", async (ctx) => {
-  console.log("files", ctx.request.files); // 尝试打印看看是否有文件
-
-  const newFilename = ctx.request.files.newFilename;
-  if (newFilename) {
-    console.log("newFilename", newFilename);
-  }
-
-  ctx.body = {
-    message: "File uploaded successfully",
-    fileName: newFilename,
-  };
-});
-
-router.post("/api/uploadTest", (ctx) => {
+router.post("/api/uploadImg", (ctx) => {
   // 如果不知道键的名字，你可以这样获取所有上传的文件信息
   const files = ctx.request.files;
   let fileData = {};
